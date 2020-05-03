@@ -90,7 +90,7 @@ def new_task():
 																			request.form['name'],
 																			request.form['due_date'],
 																			request.form['priority']
-																			])
+																			]) 
 	g.db.commit()
 	g.db.close()
 	flash('New entry created')
