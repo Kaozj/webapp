@@ -17,8 +17,8 @@ from datetime import date
 
 db.create_all()
 
-db.session.add(Task('Finish this tutorial',date(2020,4,1),10,1))
-db.session.add(Task('Finish that',date(2020,5,1),10,1))
+##db.session.add(Task('Finish this tutorial',date(2020,4,1),10,1))
+##db.session.add(Task('Finish that',date(2020,5,1),10,1))
 
 db.session.commit()
 
