@@ -144,7 +144,7 @@ def new_task():
 			return redirect(url_for('tasks'))
 	##	else:
 			##flash('All fields required')
-			##return redirect(url_for('tasks'))
+			##return redirect(url_for('tasks')) 
 			###return render_template('tasks.html',form=form,error=error)
 
 	##return render_template('tasks.html',form=form)
