@@ -6,7 +6,7 @@
   <div class="half-width">
     <form method="post" action="/">
       {{ form.csrf_token }}
-      <div class="input-group"> 
+      <div class="input-group">  
         {{ form.name(placeholder="name") }}
         {% if form.name.errors %}
           <span class="error">
