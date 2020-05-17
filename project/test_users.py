@@ -66,43 +66,25 @@ class AllTests(unittest.TestCase):
 		response=self.logout()
 		self.assertNotIn(b'Bye Bye',response.data)
 
-
-	def create_user(self,name,email,password):
-		new_user= User(name=name,email=email,password=password)
-		db.session.add(new_user)
-		db.session.commit()
-
-	def create_task(self):
-		return self.app.post('add/',data = dict(
-			name = "Go to sleep"
-			,due_date = "10/10/2099"
-			,priority = '1'
-			,posted_date = "10/10/2098"
-			,status = '1'
-		),follow_redirects=True)
-
-
-	def test_users_can_add_tasks(self):
-		self.create_user('Michale','mike@realpython.com','python')
-		self.login('Michale','python')
-		self.app.get('tasks',follow_redirects=True)
-		response=self.create_task()
-		self.assertIn(b'New entry created',response.data)
-
-
-	def test_users_cannot_complete_tasks_not_created_by_them(self):
-		self.create_user('zijiankao','zijiankao@gmail.com','python')
-		self.login('zijiankao','python')
-		self.app.get('tasks/',follow_redirects=True)
-		self.create_task()		
+	def test_logged_in_users_can_access_tasks_page(self):
+		self.register('eykhoda','khoda@gmail.com','python101','python101')
+		self.login('eykhoda','python101')
+		response=self.app.get('tasks/')
+		self.assertEqual(response.status_code,200)
+		self.assertIn(b'Add a new task:',response.data)
 		self.logout()
-		self.create_user('shiankao','shiankao@gmail.com','python')
-		self.login('shiankao','python')
-		self.app.get('tasks/',follow_redirects=True)
-		response=self.app.get("complete/1/",follow_redirects=True)
-		self.assertNotIn(b'Task marked complete',response.data)
+		response=self.app.get('tasks/',follow_redirects=True)
+		self.assertIn(b'You need to log in first',response.data)
 
 
+	def test_default_user_role(self):
+
+		db.session.add(User("Johnny","john@doe.com","johnny"))
+		db.session.commit()
+		users = db.session.query(User).all()
+		print(users)
+		for user in users:
+			self.assertEqual(user.role, 'user')
 
 
 if __name__ == '__main__':
