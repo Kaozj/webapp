@@ -1,6 +1,7 @@
 #project/models.py
 
-from views import db
+##from views import db
+from project import db
 import datetime
 
 class Task(db.Model):
